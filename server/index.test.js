@@ -102,9 +102,10 @@ describe('DELETE task',() => {
 })
 
 describe('POST register',() => {
-    const email = 'registor@foo.com'
-    const password = 'register123'
+       
     it ('should register with valid email and password',async() => {
+        const email = 'registr@foo.com'
+        const password = 'register123'
         const response = await fetch(base_url + 'user/register',{
             method: 'post',
             headers: {
@@ -117,6 +118,23 @@ describe('POST register',() => {
         expect(data).to.be.an('object')
         expect(data).to.include.all.keys('id','email')
     })
+    
+    it ('should not post a user with less than 8 charcters password',async() => {
+        const email = 'registur@foo.com'
+        const password = 'short1'
+        const response = await fetch(base_url + 'user/register',{
+            method: 'post',
+            headers: {
+                'Content-Type':'application/json'
+            },
+            body: JSON.stringify({'email':email,'password':password})
+        })
+        const data = await response.json()
+        expect(response.status).to.equal(400,data.error)
+        expect(data).to.be.an('object')
+        expect(data).to.include.all.keys('error')
+    })
+
 })
 
 describe('POST login',() => {
