@@ -14,8 +14,7 @@ const initializeTestDb = () => {
 
 const insertTestUser = (email, password) => {
     hash(password,10,(error, hashedPassword) => {
-        pool.query('insert into account (email,password) values ($1,$2)',
-            [email, hashedPassword])
+        pool.query('insert into account (email,password) values ($1,$2)',[email, hashedPassword])
     })
 }
 

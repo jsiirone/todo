@@ -2,10 +2,14 @@ import { pool } from '../helpers/db.js'
 import { Router } from 'express'
 import { hash, compare } from 'bcrypt'
 import jwt from 'jsonwebtoken'
+import { postLogin, postRegistration } from '../controllers/UserController.js'
 const { sign } = jwt
 
 const router = Router()
 
+router.post('/register', postRegistration)
+
+/*
 router.post('/register',(req,res,next) => {
     hash(req.body.password,10,(error,hashedPassword) => {
         if (error) next(error) // Hash error
@@ -23,6 +27,11 @@ router.post('/register',(req,res,next) => {
     })
 })
 
+*/
+
+router.post('/login', postLogin)
+
+/*
 router.post('/login',(req,res,next) => {
     const invalid_message = 'Invalid credentials'
     try {
@@ -49,5 +58,6 @@ router.post('/login',(req,res,next) => {
         return next(error)
     }
 })
+*/
 
 export default router
